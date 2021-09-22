@@ -173,8 +173,8 @@ public class Timer {
      * @return the number of ticks for the system clock. Currently defined as nano time.
      */
     private static long getClock() {
-        // TO BE IMPLEMENTED
-        return 0;
+        long temp = 0;// TO BE IMPLEMENTED
+        return temp;
     }
 
     /**
