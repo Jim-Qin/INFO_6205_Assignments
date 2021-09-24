@@ -7,6 +7,7 @@ import edu.neu.coe.info6205.sort.BaseHelper;
 import edu.neu.coe.info6205.sort.Helper;
 import edu.neu.coe.info6205.sort.SortWithHelper;
 import edu.neu.coe.info6205.util.Config;
+import edu.neu.coe.info6205.ArraysGenerator;
 
 public class InsertionSort<X extends Comparable<X>> extends SortWithHelper<X> {
 
@@ -75,4 +76,54 @@ public class InsertionSort<X extends Comparable<X>> extends SortWithHelper<X> {
 
     public static final String DESCRIPTION = "Insertion sort";
 
+    public static void main(String[] args) {
+        /*
+        ordered
+        * */
+        InsertionSort is = new InsertionSort();
+        ArraysGenerator AG = new ArraysGenerator();
+        long starttime;
+        long time;
+        for(int i = 1; i <= 128; i = i*2) {
+            Integer[] A = AG.generateOrderedArray(i * 1000);
+            starttime = System.nanoTime();
+            is.sort(A, 0, A.length);
+            time = System.nanoTime() - starttime;
+            System.out.println( time);
+            /////////////////////////////////////////////////////////////////
+        }
+        /*
+        reverse-ordered
+        * */
+        for(int i = 1; i <= 128; i = i*2) {
+            Integer[] B = AG.generateInversedArray(i * 1000);
+            starttime = System.nanoTime();
+            is.sort(B, 0, B.length);
+            time = System.nanoTime() - starttime;
+            System.out.println(time);
+        }
+            /////////////////////////////////////////////////////////////////
+        /*
+        random
+        * */
+        for(int i = 1; i <= 128; i = i*2) {
+            Integer[] C = AG.generateRandomArray(i * 1000, 1, i * 100);
+            starttime = System.nanoTime();
+            is.sort(C, 0, C.length);
+            time = System.nanoTime() - starttime;
+            System.out.println(time );
+        }
+            /////////////////////////////////////////////
+         /*
+        partially-ordered
+        * */
+        for(int i = 1; i <= 128; i = i*2) {
+            Integer[] D = AG.generateNearlyOrderedArray(i * 1000, i * 100);
+            starttime = System.nanoTime();
+            is.sort(D, 0, D.length);
+            time = System.nanoTime() - starttime;
+            System.out.println( time );
+        }
+
+    }
 }
