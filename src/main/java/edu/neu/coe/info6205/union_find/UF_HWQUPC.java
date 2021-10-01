@@ -8,6 +8,7 @@
 package edu.neu.coe.info6205.union_find;
 
 import java.util.Arrays;
+import java.util.Random;
 
 /**
  * Height-weighted Quick Union with Path Compression
@@ -79,10 +80,14 @@ public class UF_HWQUPC implements UF {
      * @throws IllegalArgumentException unless {@code 0 <= p < n}
      */
     public int find(int p) {
+        // TO BE IMPLEMENTED
         validate(p);
         int root = p;
-        // TO BE IMPLEMENTED
+        while(root != parent[root]){
+            root = parent[root];
+        }
         return root;
+        // ...END IMPLEMENTATION
     }
 
     /**
@@ -169,6 +174,25 @@ public class UF_HWQUPC implements UF {
 
     private void mergeComponents(int i, int j) {
         // TO BE IMPLEMENTED make shorter root point to taller one
+        int inum = 0, jnum = 0;
+        for(int k : parent){
+            if(k == i) inum ++;
+        }
+        for(int k : parent){
+            if(k == j)jnum ++;
+        }
+        if(inum < jnum){
+            parent[i] = j;
+            if(pathCompression){
+                doPathCompression(i);
+            }
+        }else{
+            parent[j] = i;
+            if(pathCompression){
+                doPathCompression(j);
+            }
+        }
+        // ...END IMPLEMENTATION
     }
 
     /**
@@ -176,5 +200,34 @@ public class UF_HWQUPC implements UF {
      */
     private void doPathCompression(int i) {
         // TO BE IMPLEMENTED update parent to value of grandparent
+        int gp = parent[i];
+        int p = i;
+        for(int j = 0; j<parent.length; j++){
+            if(parent[j] == p)
+                parent[j] = gp;
+        }
+        // ...END IMPLEMENTATION
     }
+    // part 2 & 3
+    public static void main(String[] args) {
+        int a = Integer.parseInt(args[0]);
+        for (int i = 5; i< 50 ; i = i + 5){
+            UF_HWQUPC UF = new UF_HWQUPC(i,true);
+            Random r = new Random();
+            int pairs = 0;
+            while(UF.count != 1){
+                int i1 = r.nextInt(i);
+                int i2 = r.nextInt(i);
+                if(!UF.connected(i1,i2)){
+                    UF.connect(i1,i2);
+                    pairs ++;
+                }
+            }
+            for(int k : UF.parent){
+                System.out.print(k);
+            }
+            System.out.printf("%d  %d\n",i ,pairs);
+        }
+    }
+    // ...END IMPLEMENTATION
 }
