@@ -2,4 +2,4 @@
 This is the class repository for Program Structure and Algorithms
 
 
-reports is in the folder "reports"
+Reports are in the folder "reports"
