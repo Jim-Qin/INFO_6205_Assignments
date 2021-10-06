@@ -204,25 +204,26 @@ public class UF_HWQUPC implements UF {
         // ...END IMPLEMENTATION
     }
     // part 2 & 3
-    public static void main(String[] args) {
-        int a = Integer.parseInt(args[0]);
-        for (int i = 5; i< 50 ; i = i + 5){
-            UF_HWQUPC UF = new UF_HWQUPC(i,true);
-            Random r = new Random();
-            int pairs = 0;
-            while(UF.count != 1){
-                int i1 = r.nextInt(i);
-                int i2 = r.nextInt(i);
-                if(!UF.connected(i1,i2)){
-                    UF.connect(i1,i2);
-                    pairs ++;
-                }
+    private static int count(int n){
+        UF_HWQUPC UF = new UF_HWQUPC(n,true);
+        Random r = new Random();
+        int pairs = 0;
+        while(UF.count != 1){
+            int i1 = r.nextInt(n);
+            int i2 = r.nextInt(n);
+            pairs ++;
+            if(!UF.connected(i1,i2)){
+                UF.connect(i1,i2);
             }
-            for(int k : UF.parent){
-                System.out.print(k);
-            }
-            System.out.printf("%d  %d\n",i ,pairs);
         }
+        return pairs;
+    }
+    public static void main(String[] args) {
+        for (String s : args){
+            int a = Integer.parseInt(s);
+            System.out.println( a +"  "+  count(a));
+        }
+
     }
     // ...END IMPLEMENTATION
 }
