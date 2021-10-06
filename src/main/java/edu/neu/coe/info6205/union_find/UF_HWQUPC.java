@@ -174,20 +174,15 @@ public class UF_HWQUPC implements UF {
 
     private void mergeComponents(int i, int j) {
         // TO BE IMPLEMENTED make shorter root point to taller one
-        int inum = 0, jnum = 0;
-        for(int k : parent){
-            if(k == i) inum ++;
-        }
-        for(int k : parent){
-            if(k == j)jnum ++;
-        }
-        if(inum < jnum){
+        if(height[i] < height[j]){
             parent[i] = j;
+            height[j] ++;
             if(pathCompression){
                 doPathCompression(i);
             }
         }else{
             parent[j] = i;
+            height[i] ++;
             if(pathCompression){
                 doPathCompression(j);
             }
