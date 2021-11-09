@@ -17,7 +17,7 @@ class ParSort {
             CompletableFuture<int[]> parsort1 = parsort(array, from, from + (to - from) / 2); // TO IMPLEMENT
             CompletableFuture<int[]> parsort2 = parsort(array, from + (to - from) / 2, to); // TO IMPLEMENT
             CompletableFuture<int[]> parsort = parsort1.thenCombine(parsort2, (xs1, xs2) -> {
-                int[] result = new int[xs1.length + xs2.length];
+               int[] result = new int[xs1.length + xs2.length];
                 // TO IMPLEMENT
                 return result;
             });
@@ -37,6 +37,6 @@ class ParSort {
                     sort(result, 0, to - from);
                     return result;
                 }
-        );
+                ,Main.myPool);
     }
 }

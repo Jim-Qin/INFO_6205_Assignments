@@ -15,15 +15,19 @@ import java.util.concurrent.ForkJoinPool;
  * TODO tidy it up a bit.
  */
 public class Main {
+    static int arraySize = 2000000;
+    static int threadspool = 8;
+    static ForkJoinPool myPool = new ForkJoinPool(threadspool);
 
     public static void main(String[] args) {
+
         processArgs(args);
-        System.out.println("Degree of parallelism: " + ForkJoinPool.getCommonPoolParallelism());
+        System.out.println("Degree of parallelism: " + myPool.getParallelism());
         Random random = new Random();
-        int[] array = new int[2000000];
+        int[] array = new int[arraySize];
         ArrayList<Long> timeList = new ArrayList<>();
-        for (int j = 50; j < 100; j++) {
-            ParSort.cutoff = 10000 * (j + 1);
+        for (int j = 5; j < 3000; j += 5) {
+            ParSort.cutoff = arraySize/10000 * j;
             // for (int i = 0; i < array.length; i++) array[i] = random.nextInt(10000000);
             long time;
             long startTime = System.currentTimeMillis();
@@ -36,7 +40,7 @@ public class Main {
             timeList.add(time);
 
 
-            System.out.println("cutoff：" + (ParSort.cutoff) + "\t\t10times Time:" + time + "ms");
+            System.out.println( (ParSort.cutoff) + "\t" + time);
 
         }
         try {
@@ -71,10 +75,11 @@ public class Main {
     }
 
     private static void processCommand(String x, String y) {
-        if (x.equalsIgnoreCase("N")) setConfig(x, Integer.parseInt(y));
+        if (x.equalsIgnoreCase("-N"))setConfig(x, Integer.parseInt(y));
         else
+
             // TODO sort this out
-            if (x.equalsIgnoreCase("P")) //noinspection ResultOfMethodCallIgnored
+            if (x.equalsIgnoreCase("-P")) //noinspection ResultOfMethodCallIgnored
                 ForkJoinPool.getCommonPoolParallelism();
     }
 
